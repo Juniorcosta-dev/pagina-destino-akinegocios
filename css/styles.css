@@ -1,0 +1,601 @@
+/* ══════════════════════════════════════════════
+    VARIÁVEIS CSS
+    ══════════════════════════════════════════════ */
+:root {
+    --verde: #1a7a4a;
+    --verde-esc: #0d4d2e;
+    --verde-claro: #22a05e;
+    --laranja: #f97316;
+    --laranja-h: #ea6c0a;
+    --whats: #25d366;
+    --whats-h: #1db954;
+    --bg: #f3f8f5;
+    --bg-card: #ffffff;
+    --texto: #192b1e;
+    --suave: #536459;
+    --borda: #d6e8dc;
+    --radius: 14px;
+    --sombra: 0 2px 14px rgba(0, 0, 0, 0.07);
+    --sombra-h: 0 8px 28px rgba(0, 0, 0, 0.13);
+    /*
+        ACESSIBILIDADE ① — variável de foco
+        Usada no :focus-visible global abaixo.
+      */
+    --foco: 3px solid var(--laranja);
+}
+
+/* ══════════════════════════════════════════════
+    RESET
+    ══════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ══════════════════════════════════════════════
+    ACESSIBILIDADE ② — foco visível global
+    Todo elemento focável (Tab no teclado) mostra
+    um contorno laranja bem visível.
+    NUNCA use "outline: none" sem substituir!
+    ══════════════════════════════════════════════ */
+:focus-visible {
+    outline: var(--foco);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════════
+    ACESSIBILIDADE ③ — skip link
+    Link invisível que aparece SOMENTE ao pressionar Tab.
+    Permite pular direto ao conteúdo principal.
+    Muito útil para usuários de teclado e leitores de tela.
+    ══════════════════════════════════════════════ */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--laranja);
+    color: #fff;
+    padding: 12px 20px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 0 0 8px 0;
+    z-index: 9999;
+    transition: top 0.2s;
+    font-family: "Nunito", sans-serif;
+}
+.skip-link:focus {
+    top: 0;
+}
+
+/* ══════════════════════════════════════════════
+    BASE
+    ══════════════════════════════════════════════ */
+html {
+    scroll-behavior: smooth;
+}
+
+/*
+    ACESSIBILIDADE ④ — prefers-reduced-motion
+    Respeita a preferência do sistema operacional de
+    usuários com epilepsia ou sensibilidade a movimento.
+    Remove animações para quem pediu isso no SO.
+    */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    background-color: var(--bg);
+    color: var(--texto);
+    line-height: 1.65;
+    font-size: 16px; /* mínimo legível recomendado */
+}
+
+/*
+    RESPONSIVIDADE ② — container fluido
+    Limita a largura em telas grandes e adiciona
+    padding lateral em telas pequenas.
+    */
+.container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ══════════════════════════════════════════════
+    ANIMAÇÕES — desativadas se prefers-reduced-motion
+    ══════════════════════════════════════════════ */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes pulsa {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+@keyframes pisca {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.anima {
+    animation: fadeUp 0.65s ease both;
+}
+.delay-1 {
+    animation-delay: 0.1s;
+}
+.delay-2 {
+    animation-delay: 0.25s;
+}
+.delay-3 {
+    animation-delay: 0.4s;
+}
+.delay-4 {
+    animation-delay: 0.58s;
+}
+
+/* ══════════════════════════════════════════════
+    HEADER
+    SEMÂNTICA ① — <header> identifica o cabeçalho
+    ══════════════════════════════════════════════ */
+.site-header {
+    background: var(--verde-esc);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-link {
+    text-decoration: none;
+    font-family: "Sora", sans-serif;
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+.logo-link .aki {
+    color: var(--laranja);
+}
+.logo-link .neg {
+    color: #ffffff;
+}
+
+/* ══════════════════════════════════════════════
+    HERO
+    SEMÂNTICA ② — <section> com aria-labelledby
+    conecta a seção ao seu <h1>
+    ══════════════════════════════════════════════ */
+.hero {
+    background: linear-gradient(
+        150deg,
+        var(--verde-esc) 0%,
+        #1a5c36 55%,
+        var(--verde-claro) 100%
+    );
+    /*
+        RESPONSIVIDADE ③ — clamp(mínimo, preferido, máximo)
+        O padding cresce com a tela sem precisar de media query!
+      */
+    padding: clamp(52px, 10vw, 96px) 20px clamp(64px, 12vw, 112px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.hero-deco {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+}
+.hero-deco-1 {
+    width: 560px;
+    height: 560px;
+    top: -220px;
+    right: -140px;
+}
+.hero-deco-2 {
+    width: 320px;
+    height: 320px;
+    bottom: -130px;
+    left: -60px;
+}
+
+.hero-emoji {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    display: inline-block;
+    animation: pulsa 2.2s ease-in-out infinite;
+    margin-bottom: 18px;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(249, 115, 22, 0.2);
+    color: #ffb072;
+    border: 1px solid rgba(249, 115, 22, 0.35);
+    padding: 5px 16px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+/*
+    SEO ⑩ — Hierarquia de headings
+    Só deve existir UM <h1> por página.
+    Ele deve conter a palavra-chave principal.
+    h2 → subtítulos de seções
+    h3 → subtítulos dentro de seções
+    */
+.hero-titulo {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.9rem, 5.5vw, 3.3rem);
+    color: #ffffff; /* ACESSIBILIDADE: contraste alto */
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+.hero-titulo em {
+    font-style: normal;
+    color: var(--laranja);
+}
+.hero-subtitulo {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(0.97rem, 2.5vw, 1.1rem);
+    max-width: 500px;
+    margin: 0 auto 32px;
+}
+
+.membros-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 7px 18px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.87rem;
+    font-weight: 600;
+    margin-bottom: 28px;
+}
+.dot-vivo {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--whats);
+    animation: pisca 1.6s ease-in-out infinite;
+}
+
+.btn-whats {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--whats);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    font-weight: 700;
+    padding: clamp(13px, 3vw, 17px) clamp(24px, 5vw, 40px);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.45);
+    transition:
+        background 0.22s,
+        transform 0.18s,
+        box-shadow 0.22s;
+    /*
+        ACESSIBILIDADE ⑤ — alvo de toque mínimo
+        WCAG recomenda área de toque mínima de 44x44px.
+      */
+    min-height: 48px;
+}
+.btn-whats:hover {
+    background: var(--whats-h);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(37, 211, 102, 0.5);
+}
+.btn-whats:active {
+    transform: translateY(0);
+}
+
+.hero-obs {
+    margin-top: 13px;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.82rem;
+}
+
+/* ══════════════════════════════════════════════
+    SEÇÃO: O QUE É
+    ══════════════════════════════════════════════ */
+.sec-oque {
+    padding: clamp(48px, 8vw, 80px) 20px;
+    text-align: center;
+}
+.sec-tag {
+    display: inline-block;
+    background: #dff0e8;
+    color: var(--verde);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 13px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+}
+.sec-oque h2 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    margin-bottom: 14px;
+    color: var(--texto);
+}
+.sec-oque p {
+    color: var(--suave);
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: 1.02rem;
+}
+
+/* ══════════════════════════════════════════════
+    SEÇÃO: O QUE PODE POSTAR
+    EMÂNTICA ③ — <ul> semântico para lista de itens
+    ══════════════════════════════════════════════ */
+.sec-pode {
+    padding: 0 20px clamp(48px, 8vw, 80px);
+}
+.sec-pode h2 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/*
+    RESPONSIVIDADE ④ — CSS Grid com auto-fit + minmax
+    Cria colunas automaticamente:
+    - Tela grande: 2 colunas de mínimo 300px
+    - Tela pequena: 1 coluna
+    Sem precisar de media query!
+    */
+.pode-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+.pode-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--radius);
+    padding: 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition:
+        border-color 0.22s,
+        box-shadow 0.22s,
+        transform 0.2s;
+}
+.pode-card:hover {
+    border-color: var(--verde-claro);
+    box-shadow: var(--sombra-h);
+    transform: translateY(-3px);
+}
+.pode-icone {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: #e5f3ec;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.22s;
+}
+.pode-card:hover .pode-icone {
+    background: var(--verde);
+}
+.pode-texto h3 {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+.pode-texto p {
+    font-size: 0.88rem;
+    color: var(--suave);
+    line-height: 1.55;
+}
+
+/* ══════════════════════════════════════════════
+    SEÇÃO: REGRAS
+    SEMÂNTICA ④ — <ul> para lista de regras
+    ══════════════════════════════════════════════ */
+.sec-regras {
+    background: var(--bg-card);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+    padding: clamp(48px, 8vw, 72px) 20px;
+}
+.sec-regras h2 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    text-align: center;
+    margin-bottom: 32px;
+}
+.regras-lista {
+    list-style: none;
+    max-width: 580px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.regras-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    font-size: 0.97rem;
+    line-height: 1.55;
+}
+.regra-icone {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════════
+    SEÇÃO: FAQ com <details> + <summary>
+    SEMÂNTICA ⑤ — acordeão nativo HTML, sem JS!
+    Totalmente acessível por teclado.
+    Google indexa o conteúdo dentro do <details>.
+    ══════════════════════════════════════════════ */
+.sec-faq {
+    padding: clamp(48px, 8vw, 80px) 20px;
+    text-align: center;
+}
+.sec-faq h2 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    margin-bottom: 32px;
+}
+.faq-lista {
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+details {
+    background: var(--bg-card);
+    border: 1.5px solid var(--borda);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+details[open] {
+    border-color: var(--verde-claro);
+}
+summary {
+    padding: 16px 20px;
+    font-weight: 700;
+    font-size: 0.97rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    color: var(--texto);
+    transition: color 0.2s;
+}
+summary:hover {
+    color: var(--verde);
+}
+summary::after {
+    content: "+";
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--verde);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+}
+details[open] summary::after {
+    transform: rotate(45deg);
+}
+.faq-resposta {
+    padding: 0 20px 18px;
+    font-size: 0.93rem;
+    color: var(--suave);
+    line-height: 1.7;
+    border-top: 1px solid var(--borda);
+}
+
+/* ══════════════════════════════════════════════
+    CTA FINAL
+    ══════════════════════════════════════════════ */
+.sec-cta {
+    background: linear-gradient(140deg, var(--verde-esc), #1e6b40);
+    padding: clamp(56px, 10vw, 88px) 20px;
+    text-align: center;
+}
+.sec-cta h2 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.sec-cta p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 34px;
+    font-size: 1.05rem;
+}
+
+/* ══════════════════════════════════════════════
+    FOOTER
+    SEMÂNTICA ⑥ — <footer> + <address>
+    <address> é a tag correta para dados de contato.
+    ══════════════════════════════════════════════ */
+.site-footer {
+    background: #071810;
+    padding: 32px 20px;
+    text-align: center;
+}
+.site-footer address {
+    font-style: normal; /* <address> tem itálico por padrão */
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.83rem;
+    line-height: 1.8;
+}
+.site-footer address a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.site-footer address a:hover {
+    color: var(--laranja);
+}
+
+/* ══════════════════════════════════════════════
+    RESPONSIVIDADE ⑤ — media queries de segurança
+    ══════════════════════════════════════════════ */
+@media (max-width: 480px) {
+    /* Botão ocupa largura total em celular */
+    .btn-whats {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+    }
+}
