@@ -1,37 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  O sitemap informa ao Google:
-  - Quais páginas existem no seu site
-  - Quando foram atualizadas
-  - Com que frequência mudam
-  - Qual a importância de cada uma
--->
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Cada <url> representa uma página do site -->
-  <url>
-
-    <!-- <loc> = o endereço completo da página -->
-    <loc>https://juniorcosta-dev.github.io/pagina-destino-akinegocios/</loc>
-
-    <!-- <lastmod> = data da última atualização (formato: ano-mês-dia) -->
-    <lastmod>2026-05-07</lastmod>
-
-    <!--
-      <changefreq> = com que frequência a página muda
-      Valores possíveis:
-      always / hourly / daily / weekly / monthly / yearly / never
-    -->
-    <changefreq>monthly</changefreq>
-
-    <!--
-      <priority> = importância da página no seu site
-      Valor entre 0.0 e 1.0
-      A página inicial é sempre 1.0 (mais importante)
-    -->
-    <priority>1.0</priority>
-
-  </url>
+    <url>
+        <loc>https://juniorcosta-dev.github.io/pagina-destino-akinegocios/</loc>
+        <lastmod>2026-05-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
 
 </urlset>
